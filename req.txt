@@ -1,0 +1,7 @@
+numpy>=1.23,<2.0
+pandas>=1.5,<2.0
+scikit-learn>=1.2,<1.8
+joblib
+pytest
+dvc>=3.63,<4.0
+cml>=0.0.1,<0.1
