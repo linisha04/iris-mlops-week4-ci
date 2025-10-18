@@ -21,8 +21,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install pandas scikit-learn joblib pytest dvc cml
+          # pip install --upgrade pip
+          pip install numpy>=1.23 pandas>=1.5 scikit-learn joblib pytest dvc cml
+
+          
 
       - name: Run tests
         run: pytest
