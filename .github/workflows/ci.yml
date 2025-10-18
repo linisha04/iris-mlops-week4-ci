@@ -21,8 +21,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          # pip install --upgrade pip
-          pip install "numpy>=1.23" "pandas>=1.5" scikit-learn joblib pytest dvc cml
+            python -m pip install --upgrade pip setuptools wheel
+            pip install -r requirements.txt
 
           
 
