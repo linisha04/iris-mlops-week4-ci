@@ -23,10 +23,6 @@ jobs:
         run: |
           pip install pandas scikit-learn joblib pytest dvc cml
 
-      - name: Pull Data & Model from DVC
-        run: |
-          dvc pull
-
       - name: Run Tests
         run: |
           pytest -v tests/ > result.txt
