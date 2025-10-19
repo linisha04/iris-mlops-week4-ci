@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          pip install --upgrade --use-deprecated=legacy-resolver -r requirements.txt
+          pip install --upgrade --use-deprecated=legacy-resolver -r req.txt
 
       - name: Run tests
         run: pytest
