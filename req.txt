@@ -1,7 +1,7 @@
-numpy
-pandas
-scikit-learn
-joblib
-tqdm
-pytest
-cml
+numpy>=1.26.0,<2.0
+pandas>=1.5.3,<2.2
+scikit-learn>=1.2.2,<1.5
+joblib>=1.2.0,<2.0
+tqdm>=4.65.0,<5.0
+dvc>=3.63.0,<4.0
+pytest>=7.4.0,<8.0
