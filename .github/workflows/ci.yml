@@ -43,11 +43,12 @@ jobs:
           pip install dvc_gs
 
       # 6️⃣ Configure GCS authentication (if needed)
-      - name: Authenticate to GCS
-        run: |
-          echo "${{ secrets.GCP_KEY }}" > ${{ github.workspace }}/gcp-key.json
+      - name: Pull data and models from DVC
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/gcp-key.json
+        run: |
+          echo "${{ secrets.GCP_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS
+          dvc pull -r myremote
 
 
       # 7️⃣ Pull data and models from DVC
