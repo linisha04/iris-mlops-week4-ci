@@ -45,24 +45,11 @@ jobs:
       # 6️⃣ Configure GCS authentication (if needed)
       - name: Pull data and models from DVC
         env:
-          GCP_B64: ${{ secrets.GCP_CREDENTIALS_B64 }}
+         GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/gcp-key.json
         run: |
-          set -e
-          # Decode the base64 secret into a JSON file
-          echo "$GCP_B64" | base64 -d > gcp-key.json
-
-          # Set environment variable so DVC sees it
-          export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp-key.json
-          echo "GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp-key.json" >> $GITHUB_ENV
-
-          # Install DVC with GCS support
-          pip install "dvc[gcs]"
-
-          # Optional: configure DVC remote (if not already configured)
-          dvc remote modify myremote credentialpath $(pwd)/gcp-key.json
-
-          # Pull data and models
-          dvc pull -r myremote -v
+           echo "${{ secrets.GCP_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS
+           pip install "dvc[gcs]"
+           dvc pull -r myremote
 
 
       # # 7️⃣ Pull data and models from DVC
