@@ -40,6 +40,7 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           pip install --upgrade --use-deprecated=legacy-resolver -r req.txt
           pip install "dvc[gcs]"  # install DVC with GCS support
+          pip install dvc_gs
 
       # 6️⃣ Configure GCS authentication (if needed)
       - name: Authenticate to GCS
