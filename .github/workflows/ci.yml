@@ -61,3 +61,14 @@ jobs:
       # 8️⃣ Run tests
       - name: Run tests
         run: pytest
+        
+      - name: Run sanity test
+        run: |
+          python sanity_check.py
+
+      - name: Post CML report as PR comment
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cml comment create report.txt
+
