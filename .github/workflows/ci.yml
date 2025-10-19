@@ -44,10 +44,11 @@ jobs:
 
       # 6️⃣ Configure GCS authentication (if needed)
       - name: Authenticate to GCS
+        run: |
+          echo "${{ secrets.GCP_KEY }}" > ${{ github.workspace }}/gcp-key.json
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/gcp-key.json
-        run: |
-          echo "${{ secrets.GCP_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS
+
 
       # 7️⃣ Pull data and models from DVC
       - name: Pull data and models from DVC
