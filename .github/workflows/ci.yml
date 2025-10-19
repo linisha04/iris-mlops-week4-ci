@@ -19,6 +19,9 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Setup CML
+        uses: iterative/setup-cml@v2
+
       - name: Cache pip dependencies
         uses: actions/cache@v3
         with:
