@@ -43,13 +43,14 @@ jobs:
           pip install dvc_gs
 
       - name: Setup GCP credentials
+        env:
+         GCP_KEY: ${{ secrets.GCP_KEY }}
         run: |
-          echo "${{ secrets.GCP_KEY }}" > gcp-key.json
-          echo "GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp-key.json" >> $GITHUB_ENV
-          export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp-key.json
-
-          python3 -m json.tool gcp-key.json > /dev/null && echo "✓ Valid JSON"
-
+         echo "$GCP_KEY" > gcp-key.json
+         echo "GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp-key.json" >> $GITHUB_ENV
+         export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp-key.json
+         python3 -m json.tool gcp-key.json > /dev/null && echo "✓ Valid JSON"
+ 
       - name: Install DVC with GCS support
         run: pip install "dvc[gcs]"
 
