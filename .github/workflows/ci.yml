@@ -43,7 +43,6 @@ jobs:
 
       # 6️⃣ Configure GCS authentication (if needed)
       - name: Authenticate to GCS
-        if: ${{ secrets.GCP_KEY }}
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/gcp-key.json
         run: |
