@@ -1,7 +1,7 @@
+cml
+joblib
 numpy
 pandas
 scikit-learn
-joblib
 tqdm
 pytest
-cml
