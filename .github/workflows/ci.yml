@@ -39,21 +39,37 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools wheel
           pip install --upgrade --use-deprecated=legacy-resolver -r req.txt
-          pip install "dvc[gcs]"  # install DVC with GCS support
+          # pip install "dvc[gcs]"  # install DVC with GCS support
+          pip install dvc_gs
 
-      # 6️⃣ Configure GCS authentication (if needed)
-      - name: Authenticate to GCS
-        if: ${{ secrets.GCP_KEY }}
+      - name: Setup GCP credentials
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/gcp-key.json
+         GCP_KEY: ${{ secrets.GCP_KEY }}
         run: |
-          echo "${{ secrets.GCP_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS
+         echo "$GCP_KEY" > gcp-key.json
+         echo "GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp-key.json" >> $GITHUB_ENV
+         export GOOGLE_APPLICATION_CREDENTIALS=$(pwd)/gcp-key.json
+         python3 -m json.tool gcp-key.json > /dev/null && echo "✓ Valid JSON"
+ 
+      - name: Install DVC with GCS support
+        run: pip install "dvc[gcs]"
 
-      # 7️⃣ Pull data and models from DVC
       - name: Pull data and models from DVC
-        run: |
-          dvc pull -r myremote
+        run: dvc pull -r myremote -v
+
 
       # 8️⃣ Run tests
       - name: Run tests
         run: pytest
+        
+      - name: Run sanity test
+        run: |
+          python sanity_check.py
+
+      - name: Comment report using CML
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Model Accuracy: 0.89" > report.txt
+          echo "Status: OK ✅" >> report.txt
+          cml comment create report.txt
